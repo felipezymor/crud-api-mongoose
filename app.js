@@ -1,11 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import {bookRouter} from './routes/bookRouter.js';
+require('dotenv').config();
 
 //connect to MongoDB with Mongoose
 (async () => {
     try {
-        mongoose.connect("mongodb+srv://dbHMF:<password>@cluster0.nmp7k.mongodb.net/books?retryWrites=true&w=majority", {
+        mongoose.connect(`mongodb+srv://${process.env.USERDB}:${process.env.USERPW}@cluster0.nmp7k.mongodb.net/books?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
@@ -22,4 +23,4 @@ const app = express();
 app.use(express.json());
 app.use(bookRouter);
 
-app.listen(3000, () => console.log('API Started'));
+app.listen(process.env.PORT, () => console.log('API Started'));
